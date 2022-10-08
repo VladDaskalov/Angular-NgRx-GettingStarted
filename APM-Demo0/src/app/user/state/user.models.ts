@@ -5,7 +5,7 @@ export interface UserState {
     currentUser: User;
 }
 
-export const initialUserState = {
+export const initialUserState: UserState = {
     maskUserName: false,
     currentUser: null
 }

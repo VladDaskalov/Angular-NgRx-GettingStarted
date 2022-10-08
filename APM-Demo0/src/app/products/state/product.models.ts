@@ -7,7 +7,7 @@ export interface ProductState {
     products: Product[];
 }
 
-export const initialProductState = {
+export const initialProductState: ProductState = {
     showProductCode: true,
     currentProduct: null,
     products: []
