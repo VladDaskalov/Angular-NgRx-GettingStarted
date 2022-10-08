@@ -1,4 +1,5 @@
 import { Product } from "../product";
+import * as AppState from "../../state/app.state";
 
 export interface ProductState {
     showProductCode: boolean;
@@ -10,4 +11,8 @@ export const initialProductState = {
     showProductCode: true,
     currentProduct: null,
     products: []
+}
+
+export interface State extends AppState.State {
+    products: ProductState;
 }
