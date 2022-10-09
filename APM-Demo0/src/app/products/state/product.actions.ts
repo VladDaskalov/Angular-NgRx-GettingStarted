@@ -6,7 +6,24 @@ export enum ProductActionTypes {
     SetCurrentProduct = '[Product] Set Current Product',
     ClearCurrentProduct = '[Product] Clear Current Product',
     InitializeCurrentProduct = '[Product] Initialize Current Product',
+    Load = '[Product] Load',
+    LoadSuccess = '[Product] Load Success',
+    LoadFailure = '[Product] Load Failure'
 }
+
+export const loadProducts = createAction (
+   ProductActionTypes.Load
+);
+
+export const loadProductsSuccess = createAction (
+   ProductActionTypes.LoadSuccess,
+   props<{ products: Product[]}>()
+);
+
+export const loadProductsFailure = createAction (
+   ProductActionTypes.LoadFailure,
+   props<{ error: string}>()
+);
 
 export const toggleProductCode = createAction (
    ProductActionTypes.ToggleProductCode
