@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { State } from '../state/app.state';
 
 import { AuthService } from './auth.service';
-import * as userActions from './state/user.actions';
-import { getMaskUserName } from './state/user.selectors';
+import * as UserActions from './state/user.actions';
+import * as UserSelectors from './state/user.selectors';
 
 @Component({
   templateUrl: './login.component.html',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private store: Store<State>) { }
 
   ngOnInit(): void {
-    this.store.select(getMaskUserName).subscribe(
+    this.store.select(UserSelectors.getMaskUserName).subscribe(
       maskUserNameFlag => this.maskUserName = maskUserNameFlag
     );
   }
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkChanged(): void {
-    this.store.dispatch(userActions.toggleMaskUserName());
+    this.store.dispatch(UserActions.toggleMaskUserName());
   }
 
   login(loginForm: NgForm): void {
