@@ -1,15 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
-import { Product } from "../product";
+import { newProduct } from "../product";
 import * as productActions from "./product.actions";
 import { initialProductState, ProductState } from "./product.models";
-
-const newProduct: Product = {
-    id: 0,
-    productName: '',
-    productCode: 'New',
-    description: '',
-    starRating: 0
-};
 
 export const productReducer = createReducer<ProductState>(
     initialProductState,
@@ -22,19 +14,19 @@ export const productReducer = createReducer<ProductState>(
     on(productActions.setCurrentProduct, (state, action): ProductState => {
         return {
             ...state,
-            currentProduct: action.product 
+            currentProductId: action.currentProductId 
         };
     }),
     on(productActions.clearCurrentProduct, (state): ProductState => {
         return {
             ...state,
-            currentProduct: null 
+            currentProductId: null 
         };
     }),
     on(productActions.initializeCurrentProduct, (state): ProductState => {
         return {
             ...state,
-            currentProduct: newProduct 
+            currentProductId: 0 
         };
     }),
     on(productActions.loadProductsSuccess, (state,action) => {
@@ -48,6 +40,53 @@ export const productReducer = createReducer<ProductState>(
         return {
             ...state,
             products: [],
+            error: action.error
+        };
+    }),
+    on(productActions.createProductSuccess, (state,action) => {
+        const updatedProducts = state.products.concat(action.product);
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: action.product.id,
+            error: ''
+        };
+    }),
+    on(productActions.createProductFailure, (state,action) => {
+        return {
+            ...state,
+            error: action.error
+        };
+    }),
+    on(productActions.updateProductSuccess, (state,action) => {
+        const updatedProducts = state.products.map(
+            item => item.id === action.product.id ? action.product : item)
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: action.product.id,
+            error: ''
+        };
+    }),
+    on(productActions.updateProductFailure, (state,action) => {
+        return {
+            ...state,
+            error: action.error
+        };
+    }),
+    on(productActions.deleteProductSuccess, (state,action) => {
+        const updatedProducts = state.products.filter(
+            item => item.id !== state.currentProductId)
+        return {
+            ...state,
+            products: updatedProducts,
+            currentProductId: null,
+            error: ''
+        };
+    }),
+    on(productActions.deleteProductFailure, (state,action) => {
+        return {
+            ...state,
             error: action.error
         };
     })

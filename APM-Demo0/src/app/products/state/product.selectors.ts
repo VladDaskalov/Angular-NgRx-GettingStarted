@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { newProduct } from "../product";
 import { ProductState } from "./product.models";
 
 const getProductsFeatureState = createFeatureSelector<ProductState>('products');
@@ -8,9 +9,21 @@ export const getShowProductCode = createSelector (
     state => state.showProductCode
 );
 
+export const getCurrentProductId = createSelector (
+    getProductsFeatureState,
+    state => state.currentProductId
+);
+
 export const getCurrentProduct = createSelector (
     getProductsFeatureState,
-    state => state.currentProduct
+    getCurrentProductId,
+    (state, currentProductId) => {
+        if (currentProductId === 0) {
+            return newProduct;
+        } else {
+            return currentProductId ? state.products.find(p => p.id === currentProductId) : null;
+        }
+    }
 );
 
 export const getProducts = createSelector (

@@ -3,14 +3,14 @@ import * as AppState from "../../state/app.state";
 
 export interface ProductState {
     showProductCode: boolean;
-    currentProduct: Product;
+    currentProductId: number | null;
     products: Product[];
     error: string;
 }
 
 export const initialProductState: ProductState = {
     showProductCode: true,
-    currentProduct: null,
+    currentProductId: null,
     products: [],
     error: ''
 }

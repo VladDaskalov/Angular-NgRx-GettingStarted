@@ -22,7 +22,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   errorMessage = '';
   productForm: FormGroup;
 
-   sub: Subscription;
+  sub: Subscription;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -115,10 +115,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.productService.deleteProduct(product.id).subscribe({
-          next: () => this.store.dispatch(ProductActions.clearCurrentProduct()),
-          error: err => this.errorMessage = err
-        });
+        this.store.dispatch(ProductActions.deleteProduct({ product }));
       }
     } else {
       // No need to delete, it was never saved
@@ -135,15 +132,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.productService.createProduct(product).subscribe({
-            next: product => this.store.dispatch(ProductActions.setCurrentProduct({ product })),
-            error: err => this.errorMessage = err
-          });
+          this.store.dispatch(ProductActions.createProduct({ product }));
         } else {
-          this.productService.updateProduct(product).subscribe({
-            next: product => this.store.dispatch(ProductActions.setCurrentProduct({ product })),
-            error: err => this.errorMessage = err
-          });
+          this.store.dispatch(ProductActions.updateProduct({ product }));
         }
       }
     }

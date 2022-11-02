@@ -6,3 +6,11 @@ export interface Product {
     description: string;
     starRating: number;
 }
+
+export const newProduct: Product = {
+    id: 0,
+    productName: '',
+    productCode: 'New',
+    description: '',
+    starRating: 0
+};
