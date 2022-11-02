@@ -17,11 +17,11 @@ import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
-  errorMessage: string;
 
   products$: Observable<Product[]>;
   displayCode$: Observable<boolean>;
   selectedProduct$: Observable<Product>;
+  errorMessage$: Observable<string>;
 
   constructor(private productService: ProductService,
     private store: Store<State>) { }
@@ -31,6 +31,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     this.products$ = this.store.select(ProductSelectors.getProducts);
     this.store.dispatch(ProductActions.loadProducts());
+
+    this.errorMessage$ = this.store.select(ProductSelectors.getError);
 
     this.displayCode$ = this.store.select(ProductSelectors.getShowProductCode);
   }
