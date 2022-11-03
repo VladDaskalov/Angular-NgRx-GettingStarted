@@ -1,5 +1,4 @@
 import { createReducer, on } from "@ngrx/store";
-import { newProduct } from "../product";
 import * as productActions from "./product.actions";
 import { initialProductState, ProductState } from "./product.models";
 
@@ -36,13 +35,6 @@ export const productReducer = createReducer<ProductState>(
             error: ''
         };
     }),
-    on(productActions.loadProductsFailure, (state,action) => {
-        return {
-            ...state,
-            products: [],
-            error: action.error
-        };
-    }),
     on(productActions.createProductSuccess, (state,action) => {
         const updatedProducts = state.products.concat(action.product);
         return {
@@ -50,12 +42,6 @@ export const productReducer = createReducer<ProductState>(
             products: updatedProducts,
             currentProductId: action.product.id,
             error: ''
-        };
-    }),
-    on(productActions.createProductFailure, (state,action) => {
-        return {
-            ...state,
-            error: action.error
         };
     }),
     on(productActions.updateProductSuccess, (state,action) => {
@@ -68,12 +54,6 @@ export const productReducer = createReducer<ProductState>(
             error: ''
         };
     }),
-    on(productActions.updateProductFailure, (state,action) => {
-        return {
-            ...state,
-            error: action.error
-        };
-    }),
     on(productActions.deleteProductSuccess, (state,action) => {
         const updatedProducts = state.products.filter(
             item => item.id !== state.currentProductId)
@@ -84,7 +64,7 @@ export const productReducer = createReducer<ProductState>(
             error: ''
         };
     }),
-    on(productActions.deleteProductFailure, (state,action) => {
+    on(productActions.serviceCallFailure, (state,action) => {
         return {
             ...state,
             error: action.error

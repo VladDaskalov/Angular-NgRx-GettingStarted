@@ -15,7 +15,7 @@ export class ProductEffects {
             ofType(ProductActions.loadProducts),
             mergeMap(action => this.productService.getProducts().pipe(
                 map(products => ProductActions.loadProductsSuccess({ products })),
-                catchError(error => of(ProductActions.loadProductsFailure({ error })))
+                catchError(error => of(ProductActions.serviceCallFailure({ error })))
             ))
         );
     });
@@ -25,7 +25,7 @@ export class ProductEffects {
             ofType(ProductActions.createProduct),
             concatMap(action => this.productService.createProduct(action.product).pipe(
                 map(product => ProductActions.createProductSuccess({ product })),
-                catchError(error => of(ProductActions.createProductFailure({ error })))
+                catchError(error => of(ProductActions.serviceCallFailure({ error })))
             ))
         );
     });
@@ -35,7 +35,7 @@ export class ProductEffects {
             ofType(ProductActions.updateProduct),
             concatMap(action => this.productService.updateProduct(action.product).pipe(
                 map(product => ProductActions.updateProductSuccess({ product })),
-                catchError(error => of(ProductActions.updateProductFailure({ error })))
+                catchError(error => of(ProductActions.serviceCallFailure({ error })))
             ))
         );
     });
@@ -45,7 +45,7 @@ export class ProductEffects {
             ofType(ProductActions.deleteProduct),
             concatMap(action => this.productService.deleteProduct(action.product.id).pipe(
                 map(() => ProductActions.deleteProductSuccess()),
-                catchError(error => of(ProductActions.deleteProductFailure({ error })))
+                catchError(error => of(ProductActions.serviceCallFailure({ error })))
             ))
         );
     });
