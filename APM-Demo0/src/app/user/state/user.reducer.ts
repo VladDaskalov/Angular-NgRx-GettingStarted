@@ -1,10 +1,9 @@
-import { createAction, createReducer, on } from "@ngrx/store";
-import { initialUserState, UserState } from "./user.models";
-import * as userActions from './user.actions'
+import { createReducer, on } from "@ngrx/store";
+import { initialUserState, UserActions, UserState } from ".";
 
 export const userReducer = createReducer(
     initialUserState,
-    on(userActions.toggleMaskUserName, (state): UserState => {
+    on(UserActions.toggleMaskUserName, (state): UserState => {
         return {
             ...state,
             maskUserName: !state.maskUserName

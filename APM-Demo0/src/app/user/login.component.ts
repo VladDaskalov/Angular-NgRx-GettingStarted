@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
 import { State } from '../state/app.state';
 
 import { AuthService } from './auth.service';
-import * as UserActions from './state/user.actions';
-import * as UserSelectors from './state/user.selectors';
+import { UserActions, UserSelectors } from './state';
 
 @Component({
   templateUrl: './login.component.html',
