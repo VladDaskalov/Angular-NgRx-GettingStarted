@@ -8,10 +8,8 @@ import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
 import { Store } from '@ngrx/store';
-import { State } from '../state/product.models';
-import * as ProductSelectors from '../state/product.selectors';
-import * as ProductActions from '../state/product.actions';
 import { tap } from 'rxjs/operators';
+import { ProductPageActions, ProductSelectors, State } from '../state';
 
 @Component({
   selector: 'pm-product-edit',
@@ -115,11 +113,11 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.store.dispatch(ProductActions.deleteProduct({ product }));
+        this.store.dispatch(ProductPageActions.deleteProduct({ product }));
       }
     } else {
       // No need to delete, it was never saved
-      this.store.dispatch(ProductActions.clearCurrentProduct());
+      this.store.dispatch(ProductPageActions.clearCurrentProduct());
     }
   }
 
@@ -132,9 +130,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.store.dispatch(ProductActions.createProduct({ product }));
+          this.store.dispatch(ProductPageActions.createProduct({ product }));
         } else {
-          this.store.dispatch(ProductActions.updateProduct({ product }));
+          this.store.dispatch(ProductPageActions.updateProduct({ product }));
         }
       }
     }
